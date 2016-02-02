@@ -71,7 +71,7 @@ def update_record_set(name, DNSName, type="A"):
     )['ResourceRecordSets']
 
     # necessary since list_resource_record_set is actually a fuzzy match
-    current_records = filter(lambda d: d['Name'] == name, current_records)
+    current_records = filter(lambda d: d['Name'].startswith(fqdn), current_records)
 
     updates = {ip}
     for record in current_records:
