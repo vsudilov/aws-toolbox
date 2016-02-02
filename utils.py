@@ -65,7 +65,7 @@ def update_record_set(name, DNSName, type="A"):
 
     current_records = c.list_resource_record_sets(
         HostedZoneId=id,
-        StartRecordName=name,
+        StartRecordName=fqdn,
         StartRecordType=type,
         MaxItems='5',
     )['ResourceRecordSets']
