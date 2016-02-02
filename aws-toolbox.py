@@ -1,6 +1,5 @@
 import argparse
-from utils import get_this_instance_id
-from utils import get_single_tag
+from utils import get_single_tag, update_record_set
 import sys
 
 
@@ -37,6 +36,11 @@ def main():
     args = get_args()
     if args.get_instance_tag:
         print(get_single_tag(tag_key=args.get_instance_tag))
+        sys.exit(0)
+
+    if args.update_dns:
+        name, DNSName = args.update_dns
+        print(update_record_set(name=name, DNSName=DNSName))
         sys.exit(0)
 
 
