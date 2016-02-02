@@ -35,7 +35,7 @@ def get_args():
 def main():
     args = get_args()
     if args.get_instance_tag:
-        print(get_single_tag(tag_key=args.get_instance_tag))
+        print(get_single_tag(tag_key=args.get_instance_tag[0]))
         sys.exit(0)
 
     if args.update_dns:
