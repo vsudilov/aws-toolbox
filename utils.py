@@ -61,9 +61,9 @@ def update_record_set(name, DNSName, type="A"):
     c = boto3.client('route53')
     id = c.list_hosted_zones_by_name(DNSName=DNSName)['HostedZones'][0]['Id']
     ip = get_this_instance_local_ip()
-    name = "{}.{}.".format(name, DNSName)
+    fqdn = "{}.{}.".format(name, DNSName)
 
-    current_records = c.list_resource_record_set(
+    current_records = c.list_resource_record_sets(
         HostedZoneId=id,
         StartRecordName=name,
         StartRecordType=type,
@@ -81,16 +81,17 @@ def update_record_set(name, DNSName, type="A"):
     rv = c.change_resource_record_sets(
         HostedZoneId=id,
         ChangeBatch={
-            'Comment': 'toolbox-update record',
+            'Comment': 'toolbox-update',
             'Changes': [
                 {
-                    'Action': "UPSERT",
+                    'Action': 'UPSERT',
                     'ResourceRecordSet': {
-                        'Name': name,
+                        'Name': fqdn,
                         'Type': type,
+                        'TTL': 600,
                         'ResourceRecords': [{"Value": v} for v in updates]
                     }
-                },
+                }
             ]
         }
     )
