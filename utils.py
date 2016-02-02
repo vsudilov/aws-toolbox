@@ -21,7 +21,7 @@ def get_this_instance_local_ip():
     return _get_metadata('local-ipv4')
 
 
-def get_single_tag(tag_key=None, instance_id=None):
+def get_single_tag(tag_key, instance_id=None):
     """
     get a single tag on an instance
     :param tag_key: tag key to query
@@ -37,9 +37,8 @@ def get_single_tag(tag_key=None, instance_id=None):
             {"Name": "resource-id", "Values": [instance_id]}
         ]
     )['Tags']
-    if tag_key is not None:
-        tags = filter(lambda d: d.get('Key') == tag_key, tags)
-    assert tags, "No results found"
+    tags = filter(lambda d: d.get('Key') == tag_key, tags)
+    assert tags, "No tag '{}' found".format(tag_key)
     return tags[0]['Value']
 
 
