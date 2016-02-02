@@ -39,7 +39,8 @@ def get_single_tag(tag_key=None, instance_id=None):
     )['Tags']
     if tag_key is not None:
         tags = filter(lambda d: d.get('Key') == tag_key, tags)
-    return tags
+    assert tags, "No results found"
+    return tags[0]['Value']
 
 
 def is_reachable(host):
