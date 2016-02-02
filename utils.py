@@ -2,6 +2,8 @@ import requests
 import boto3
 import os
 
+os.environ.setdefault('AWS_DEFAULT_REGION', 'us-east-1')
+
 
 def _get_metadata(endpoint):
     base = 'http://169.254.169.254/latest/meta-data'
