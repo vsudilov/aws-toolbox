@@ -74,9 +74,10 @@ def update_record_set(name, DNSName, type="A"):
     current_records = filter(lambda d: d['Name'].startswith(fqdn), current_records)
 
     updates = {ip}
-    for record in current_records[0]['ResourceRecords']:
-        if is_reachable(record["Value"]):
-            updates.add(record["Value"])
+    if current_records:
+        for record in current_records[0]['ResourceRecords']:
+            if is_reachable(record["Value"]):
+                updates.add(record["Value"])
 
     rv = c.change_resource_record_sets(
         HostedZoneId=id,
